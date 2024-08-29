@@ -10,7 +10,7 @@ public class Cipher {
 //        this.word = "";
 //    }
 
-    public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz.,!? ";
+    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz.,!? ";
     public static String encrypt(String inputStr,int shiftKey){// (hello. , 3)
         // convert inputStr into lower case
         inputStr = inputStr.toLowerCase();
@@ -18,22 +18,24 @@ public class Cipher {
         // encryptStr to store encrypted data
         String encryptStr = "";
 
-        // use for loop for traversing each character of the input string
-        for (int i = 0; i < inputStr.length(); i++)
-        {
-            // get position of each character of inputStr in ALPHABET
-            int pos = ALPHABET.indexOf(inputStr.charAt(i));
+        Validator validator = new Validator();
+        if(validator.isValidKey(shiftKey)) {
+            // use for loop for traversing each character of the input string
+            for (int i = 0; i < inputStr.length(); i++) {
+                // get position of each character of inputStr in ALPHABET
+                int pos = ALPHABET.indexOf(inputStr.charAt(i));
 
-            // get encrypted char for each char of inputStr
-            int encryptPos = (shiftKey + pos) % 31;
-            char encryptChar = ALPHABET.charAt(encryptPos);
+                // get encrypted char for each char of inputStr
+                int encryptPos = (shiftKey + pos) % 31;
+                char encryptChar = ALPHABET.charAt(encryptPos);
 
-            // add encrypted char to encrypted string
-            encryptStr += encryptChar;
+                // add encrypted char to encrypted string
+                encryptStr += encryptChar;
+            }
+            // return encrypted string
+            return encryptStr;
         }
-
-        // return encrypted string
-        return encryptStr;
+        return "wrong key entered.";
     }
 
     // create decryptData() method for decrypting user input string with given shift key
@@ -45,26 +47,29 @@ public class Cipher {
         // decryptStr to store decrypted data
         String decryptStr = "";
 
-        // use for loop for traversing each character of the input string
-        for (int i = 0; i < inputStr.length(); i++)
-        {
+        Validator validator = new Validator();
+        if(validator.isValidKey(shiftKey)) {
+            // use for loop for traversing each character of the input string
+            for (int i = 0; i < inputStr.length(); i++) {
 
-            // get position of each character of inputStr in ALPHABET
-            int pos = ALPHABET.indexOf(inputStr.charAt(i));
+                // get position of each character of inputStr in ALPHABET
+                int pos = ALPHABET.indexOf(inputStr.charAt(i));
 
-            // get decrypted char for each char of inputStr
-            int decryptPos = (pos - shiftKey) % 31;
+                // get decrypted char for each char of inputStr
+                int decryptPos = (pos - shiftKey) % 31;
 
-            // if decryptPos is negative
-            if (decryptPos < 0){
-                decryptPos = ALPHABET.length() + decryptPos;
+                // if decryptPos is negative
+                if (decryptPos < 0) {
+                    decryptPos = ALPHABET.length() + decryptPos;
+                }
+                char decryptChar = ALPHABET.charAt(decryptPos);
+
+                // add decrypted char to decrypted string
+                decryptStr += decryptChar;
             }
-            char decryptChar = ALPHABET.charAt(decryptPos);
-
-            // add decrypted char to decrypted string
-            decryptStr += decryptChar;
+            // return decrypted string
+            return decryptStr;
         }
-        // return decrypted string
-        return decryptStr;
+        return "wrong key entered.";
     }
 }
