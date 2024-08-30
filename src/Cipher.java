@@ -39,7 +39,7 @@ public class Cipher {
     }
 
     // create decryptData() method for decrypting user input string with given shift key
-    public static String decryptData(String inputStr, int shiftKey)
+    public static String decrypt(String inputStr, int shiftKey)
     {
         // convert inputStr into lower case
         inputStr = inputStr.toLowerCase();
